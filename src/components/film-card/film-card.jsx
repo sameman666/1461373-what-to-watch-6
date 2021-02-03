@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FilmCard = (props) => {
-  console.log(props)
   const {film} = props;
 
   return (
