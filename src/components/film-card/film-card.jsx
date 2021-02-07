@@ -16,7 +16,10 @@ const FilmCard = (props) => {
 };
 
 FilmCard.propTypes = {
-  film: PropTypes.object,
+  film: PropTypes.shape({
+    "preview_image": PropTypes.string,
+    "name": PropTypes.string
+  }),
 };
 
 export default FilmCard;
