@@ -9,7 +9,7 @@ const Main = (props) => {
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={promoFilm.background_image} alt={promoFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -126,8 +126,17 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  films: PropTypes.array,
-  promoFilm: PropTypes.object
+  films: PropTypes.arrayOf(PropTypes.shape({
+    "preview_image": PropTypes.string,
+    "name": PropTypes.string
+  })),
+  promoFilm: PropTypes.shape({
+    "name": PropTypes.string,
+    "genre": PropTypes.string,
+    "released": PropTypes.number,
+    "poster_image": PropTypes.string,
+    "background_image": PropTypes.string,
+  })
 };
 
 export default Main;

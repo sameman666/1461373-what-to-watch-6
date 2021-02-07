@@ -26,6 +26,7 @@ const temporaryPromoFilm = {
   "genre": `Drama`,
   "released": 2015,
   "poster_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Macbeth.jpg`,
+  "background_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Macbeth.jpg`,
 };
 
 ReactDOM.render(
