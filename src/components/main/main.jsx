@@ -1,5 +1,6 @@
 import React from 'react';
-import FilmCard from '../film-card/film-card';
+import {PropTypesShapeOfFilm} from '../../prop-types-shape';
+import FilmList from '../film-list/film-list';
 import PropTypes from 'prop-types';
 
 const Main = (props) => {
@@ -99,7 +100,7 @@ const Main = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            {films.map((film, index) => <FilmCard key={index} film={film} />)}
+            <FilmList films = {films}/>
           </div>
 
           <div className="catalog__more">
@@ -126,17 +127,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.shape({
-    "preview_image": PropTypes.string,
-    "name": PropTypes.string
-  })),
-  promoFilm: PropTypes.shape({
-    "name": PropTypes.string,
-    "genre": PropTypes.string,
-    "released": PropTypes.number,
-    "poster_image": PropTypes.string,
-    "background_image": PropTypes.string,
-  })
+  films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
+  promoFilm: PropTypes.shape(PropTypesShapeOfFilm)
 };
 
 export default Main;

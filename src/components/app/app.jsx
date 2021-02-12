@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import Main from '../main/main';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
@@ -24,16 +25,21 @@ const App = (props) => {
           <SignIn />
         </Route>
         <Route exact path="/mylist">
-          <MyList />
+          <MyList
+            films = {films}
+          />
         </Route>
         <Route exact path="/films/:id">
           <Film />
         </Route>
         <Route exact path="/films/:id/review">
-          <AddReview />
+          <AddReview
+            film = {films[0]}/>
         </Route>
         <Route exact path="/player/:id">
-          <Player />
+          <Player
+            film = {films[0]}
+          />
         </Route>
         <Route>
           <NotFound />
@@ -44,17 +50,8 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.shape({
-    "preview_image": PropTypes.string,
-    "name": PropTypes.string
-  })),
-  promoFilm: PropTypes.shape({
-    "name": PropTypes.string,
-    "genre": PropTypes.string,
-    "released": PropTypes.number,
-    "poster_image": PropTypes.string,
-    "background_image": PropTypes.string,
-  })
+  films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
+  promoFilm: PropTypes.shape(PropTypesShapeOfFilm)
 };
 
 export default App;
