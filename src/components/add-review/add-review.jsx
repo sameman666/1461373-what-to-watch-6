@@ -49,7 +49,7 @@ const AddReview = (props) => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm></AddReviewForm>
+        <AddReviewForm/>
       </div>
 
     </section>
