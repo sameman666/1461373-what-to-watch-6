@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const VideoPlayer = (props) => {
   const TIME_DELAY_MS = 1000;
+  let timeoutID;
   const {defaultIsPlaying, film} = props;
   const [isPlaying, setIsPlaying] = useState(defaultIsPlaying);
 
@@ -24,10 +25,11 @@ const VideoPlayer = (props) => {
   return (
     <div className="small-movie-card__image"
       onMouseEnter={() => {
-        setTimeout(startPlaying, TIME_DELAY_MS);
+        timeoutID = setTimeout(startPlaying, TIME_DELAY_MS);
       }}
       onMouseLeave={() => {
         setIsPlaying(false);
+        clearTimeout(timeoutID);
       }}>
       <video ref={videoRef} src={isPlaying ? film.preview_video_link : ``} poster={film.preview_image} width="100%" muted>
       </video>
@@ -38,6 +40,6 @@ const VideoPlayer = (props) => {
 export default VideoPlayer;
 
 VideoPlayer.propTypes = {
-  film: PropTypes.shape(PropTypesShapeOfFilm),
+  film: PropTypes.shape(PropTypesShapeOfFilm).isRequired,
   defaultIsPlaying: PropTypes.bool
 };

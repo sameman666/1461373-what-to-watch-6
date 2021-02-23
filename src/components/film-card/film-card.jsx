@@ -5,13 +5,10 @@ import {Link} from 'react-router-dom';
 import VideoPlayer from '../video-player/video-player';
 
 const FilmCard = (props) => {
-  const {film, setActiveCard} = props;
+  const {film} = props;
 
   return (
-    <article className="small-movie-card catalog__movies-card"
-      onMouseEnter={() => {
-        setActiveCard(film);
-      }}>
+    <article className="small-movie-card catalog__movies-card">
       <VideoPlayer defaultIsPlaying={false} film={film}/>
       <h3 className="small-movie-card__title">
         <Link to={`/films/${film.id}`} className="small-movie-card__link">{film.name}</Link>

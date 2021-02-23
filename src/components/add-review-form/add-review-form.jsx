@@ -18,10 +18,10 @@ const AddReviewForm = () => {
     <form onSubmit={handleSubmit} action="#" className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
-          {RATING_STARS .map((starNumber) =>
-            <React.Fragment key={`${starNumber}`}>
-              <input className="rating__input" id={`star-${starNumber}`} type="radio" name="rating" value={`${starNumber}`}/>
-              <label className="rating__label" htmlFor={`star-${starNumber}`}>{`Rating ${starNumber}`}</label>
+          {RATING_STARS.map((star, index) =>
+            <React.Fragment key={`${index + 1}`}>
+              <input className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={`${index + 1}`}/>
+              <label className="rating__label" htmlFor={`star-${index + 1}`}>{`Rating ${index + 1}`}</label>
             </React.Fragment>
           )}
         </div>
