@@ -17,7 +17,7 @@ const App = (props) => {
       <Switch>
         <Route exact path="/">
           <Main
-            films = {films}
+            // films = {films}
             promoFilm = {promoFilm}
           />
         </Route>

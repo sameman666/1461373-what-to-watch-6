@@ -11,7 +11,7 @@ const Film = (props) => {
 
   const filterMoreLikeThis = (movies) => {
     let moreLikeThisFilms = movies.filter((movie) => movie.genre === film.genre && movie.name !== film.name);
-    return moreLikeThisFilms.filter((movie, index) => (index < MORE_LIKE_THIS_AMOUNT));
+    return moreLikeThisFilms.slice(0, MORE_LIKE_THIS_AMOUNT);
   };
 
   return (
@@ -81,9 +81,7 @@ const Film = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__movies-list">
-            <FilmList films = {filterMoreLikeThis(films)}/>
-          </div>
+          <FilmList films={filterMoreLikeThis(films)}/>
         </section>
 
         <footer className="page-footer">

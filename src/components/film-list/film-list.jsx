@@ -7,7 +7,9 @@ const FilmList = (props) => {
   const {films} = props;
 
   return (
-    films.map((film) => <FilmCard key={film.id} film={film} />)
+    <div className="catalog__movies-list">
+      {films.map((film) => <FilmCard key={film.id} film={film} />)}
+    </div>
   );
 };
 
