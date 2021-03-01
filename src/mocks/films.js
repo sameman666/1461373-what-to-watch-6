@@ -182,6 +182,29 @@ export const temporaryFilms = [
     "is_favorite": false,
     "video_link": `http://media.xiph.org/mango/tears_of_steel_1080p.webm`,
     "preview_video_link": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+  },
+  {
+    "name": `Seven Years in Tibet`,
+    "poster_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Seven_Years_in_Tibet.jpg`,
+    "preview_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/seven-years-in-tibet.jpg`,
+    "background_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Seven_Years_in_Tibet.jpg`,
+    "background_color": `#C6CADF`,
+    "description": `True story of Heinrich Harrer, an Austrian mountain climber who became friends with the Dalai Lama at the time of China's takeover of Tibet.`,
+    "rating": 3.6,
+    "scores_count": 112612,
+    "director": `Jean-Jacques Annaud`,
+    "starring": [
+      `Brad Pitt`,
+      `David Thewlis`,
+      `BD Wong`
+    ],
+    "run_time": 136,
+    "genre": `Adventure`,
+    "released": 1997,
+    "id": 9,
+    "is_favorite": false,
+    "video_link": `http://media.xiph.org/mango/tears_of_steel_1080p.webm`,
+    "preview_video_link": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
   }
 ];
 
