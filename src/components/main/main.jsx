@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {Filters} from '../../const';
 import FilmList from '../film-list/film-list';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
 import {connect} from 'react-redux';
+import ShowMoreButton from '../show-more-button/show-more-button';
+import {START_COUNT_FILMS_IN_LIST} from '../../const';
 
 const Main = (props) => {
   const {films, promoFilm, genre} = props;
+  const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
 
   const filterMoviesByGenre = (filter, movies) => {
     if (filter === Filters.DEFAULT) {
@@ -15,6 +18,8 @@ const Main = (props) => {
     }
     return movies.filter((movie)=>movie.genre === filter);
   };
+
+  const filteredFilms = filterMoviesByGenre(genre, films);
 
   return (
     <React.Fragment>
@@ -76,12 +81,15 @@ const Main = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
-          <FilmList films={filterMoviesByGenre(genre, films)}/>
+          <GenresList setStartCountFilmsInList={setCountFilmsInFilter}/>
+          <FilmList films={filteredFilms} countFilmsInList={countFilmsInFilter}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {filteredFilms.length > countFilmsInFilter &&
+            <ShowMoreButton
+              countFilmsInList={countFilmsInFilter}
+              setCountFilmsInList={setCountFilmsInFilter}
+            ></ShowMoreButton>
+          }
         </section>
 
         <footer className="page-footer">
