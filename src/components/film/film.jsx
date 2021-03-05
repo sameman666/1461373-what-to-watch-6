@@ -102,10 +102,10 @@ const Film = (props) => {
   );
 };
 
-export default Film;
-
 Film.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   film: PropTypes.shape(PropTypesShapeOfFilm).isRequired,
   comments: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfComment))
 };
+
+export default Film;
