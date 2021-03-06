@@ -7,9 +7,11 @@ import GenresList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {START_COUNT_FILMS_IN_LIST} from '../../const';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const Main = (props) => {
-  const {films, promoFilm, genre} = props;
+  const {films, promoFilm, genre, authorizationStatus} = props;
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
 
   const filterMoviesByGenre = (filter, movies) => {
@@ -40,9 +42,12 @@ const Main = (props) => {
           </div>
 
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+            {authorizationStatus === AuthorizationStatus.AUTH ?
+              <div className="user-block__avatar">
+                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              </div> :
+              <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
+            }
           </div>
         </header>
 
@@ -110,12 +115,15 @@ const Main = (props) => {
 const mapStateToProps = (state) => ({
   genre: state.genre,
   films: state.films,
+  authorizationStatus: state.authorizationStatus,
+  promoFilm: state.promoFilm
 });
 
 Main.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   promoFilm: PropTypes.shape(PropTypesShapeOfFilm),
   genre: PropTypes.string,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export {Main};

@@ -4,8 +4,9 @@ import {AuthorizationStatus} from '../const';
 const initialState = {
   genre: `All genres`,
   films: [],
+  promoFilm: {},
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoaded: false
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+    case ActionType.LOAD_PROMO_FILM:
+      return {
+        ...state,
+        promoFilm: action.payload,
       };
   }
 
