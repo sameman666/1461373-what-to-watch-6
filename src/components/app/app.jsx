@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {PropTypesShapeOfFilm, PropTypesShapeOfComment} from '../../prop-types-shape';
 import Main from '../main/main';
 import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import Film from '../film/film';
 import MyList from '../my-list/my-list';
 import NotFound from '../not-found/not-found';
@@ -10,11 +10,14 @@ import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import AddReview from '../add-review/add-review';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {fetchFilmList} from "../../store/api-actions";
+import {fetchFilmList, fetchPromoFilm} from "../../store/api-actions";
 import {connect} from 'react-redux';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from "../../browser-history";
+import {AppRoute} from '../../const';
 
 const App = (props) => {
-  const {films, promoFilm, comments, isDataLoaded, onLoadData} = props;
+  const {films, comments, isDataLoaded, onLoadData} = props;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -29,21 +32,18 @@ const App = (props) => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
-          <Main
-            promoFilm = {promoFilm}
-          />
+        <Route exact path={AppRoute.ROOT}>
+          <Main />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <SignIn />
         </Route>
-        <Route exact path="/mylist">
-          <MyList
-            films = {films}
-          />
-        </Route>
+        <PrivateRoute exact
+          path="/mylist"
+          render={() => <MyList films = {films}/>}
+        />
         <Route exact path="/films/:id">
           <Film
             films={films}
@@ -51,11 +51,10 @@ const App = (props) => {
             comments = {comments}
           />
         </Route>
-        <Route exact path="/films/:id/review">
-          <AddReview
-            film = {films[0]}
-          />
-        </Route>
+        <PrivateRoute exact
+          path="/films/:id/review"
+          render={() => <AddReview film = {films[0]}/>}
+        />
         <Route exact path="/player/:id">
           <Player
             film = {films[0]}
@@ -86,6 +85,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchFilmList());
+    dispatch(fetchPromoFilm());
   },
 });
 

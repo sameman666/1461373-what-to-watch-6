@@ -1,11 +1,3 @@
-export const temporaryPromoFilm = {
-  "name": `Macbeth`,
-  "genre": `Drama`,
-  "released": 2015,
-  "poster_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Macbeth.jpg`,
-  "background_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Macbeth.jpg`,
-};
-
 export const temporaryComments = [
   {
     "id": 1,
