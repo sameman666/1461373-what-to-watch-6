@@ -1,5 +1,7 @@
 export const ActionType = {
-  GENRE_CHANGES: `genre/change`
+  GENRE_CHANGES: `genre/change`,
+  LOAD_FILMS: `data/loadFilms`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
 export const ActionCreator = {
@@ -7,4 +9,12 @@ export const ActionCreator = {
     type: ActionType.GENRE_CHANGES,
     payload: genre
   }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  })
 };

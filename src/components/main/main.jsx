@@ -4,9 +4,9 @@ import {Filters} from '../../const';
 import FilmList from '../film-list/film-list';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
-import {connect} from 'react-redux';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {START_COUNT_FILMS_IN_LIST} from '../../const';
+import {connect} from 'react-redux';
 
 const Main = (props) => {
   const {films, promoFilm, genre} = props;
@@ -85,10 +85,7 @@ const Main = (props) => {
           <FilmList films={filteredFilms} countFilmsInList={countFilmsInFilter}/>
 
           {filteredFilms.length > countFilmsInFilter &&
-            <ShowMoreButton
-              countFilmsInList={countFilmsInFilter}
-              setCountFilmsInList={setCountFilmsInFilter}
-            ></ShowMoreButton>
+          <ShowMoreButton countFilmsInList={countFilmsInFilter} setCountFilmsInList={setCountFilmsInFilter}/>
           }
         </section>
 
@@ -118,7 +115,7 @@ const mapStateToProps = (state) => ({
 Main.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   promoFilm: PropTypes.shape(PropTypesShapeOfFilm),
-  genre: PropTypes.string
+  genre: PropTypes.string,
 };
 
 export {Main};
