@@ -130,13 +130,13 @@ const Tabs = (props) => {
       <div className="movie-card__desc">
         <nav className="movie-nav movie-card__nav">
           <ul className="movie-nav__list">
-            {Object.entries(TabTypes).map((tabType, index) =>
-              <li key={index} className={`movie-nav__item ${activeTab === tabType[0] ? `movie-nav__item--active` : ``}`}>
+            {Object.values(TabTypes).map((tabType, index) =>
+              <li key={index} className={`movie-nav__item ${activeTab === tabType ? `movie-nav__item--active` : ``}`}>
                 <a className="movie-nav__link" style={{cursor: `pointer`}}
                   onClick={
                     setActiveItem
                   }>
-                  {tabType[1]}
+                  {tabType}
                 </a>
               </li>
             )}

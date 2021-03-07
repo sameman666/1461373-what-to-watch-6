@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
 const Main = (props) => {
-  const {films, promoFilm, genre, authorizationStatus} = props;
+  const {films, promoFilm, genre, authorizationStatus, avatarUrl} = props;
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
 
   const filterMoviesByGenre = (filter, movies) => {
@@ -44,7 +44,7 @@ const Main = (props) => {
           <div className="user-block">
             {authorizationStatus === AuthorizationStatus.AUTH ?
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <Link to={AppRoute.MY_LIST}><img src={`${avatarUrl}`} alt="User avatar" width="63" height="63" /></Link>
               </div> :
               <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
             }
@@ -116,7 +116,8 @@ const mapStateToProps = (state) => ({
   genre: state.genre,
   films: state.films,
   authorizationStatus: state.authorizationStatus,
-  promoFilm: state.promoFilm
+  promoFilm: state.promoFilm,
+  avatarUrl: state.avatarUrl
 });
 
 Main.propTypes = {
@@ -124,6 +125,7 @@ Main.propTypes = {
   promoFilm: PropTypes.shape(PropTypesShapeOfFilm),
   genre: PropTypes.string,
   authorizationStatus: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string,
 };
 
 export {Main};

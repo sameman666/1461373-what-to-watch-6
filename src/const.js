@@ -12,11 +12,16 @@ export const AuthorizationStatus = {
 export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
+  MY_LIST: `/mylist`,
+  FILMS: `/films`,
+  NOT_FOUND: `/404`,
+  ADD_REVIEW: `/review`
 };
 
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
   LOGOUT: `/logout`,
+  COMMENTS: `/comments`,
   PROMO_FILM: `/films/promo`
 };

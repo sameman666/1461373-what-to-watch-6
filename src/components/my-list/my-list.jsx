@@ -2,9 +2,10 @@ import React from 'react';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 const MyList = (props) => {
-  const {films} = props;
+  const {films, avatarUrl} = props;
 
   return (
     <div className="user-page">
@@ -21,7 +22,7 @@ const MyList = (props) => {
 
         <div className="user-block">
           <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            <img src={`${avatarUrl}`} alt="User avatar" width="63" height="63" />
           </div>
         </div>
       </header>
@@ -60,8 +61,14 @@ const MyList = (props) => {
   );
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  avatarUrl: state.avatarUrl
+});
 
 MyList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
+  avatarUrl: PropTypes.string,
 };
+
+export {MyList};
+export default connect(mapStateToProps, null)(MyList);
