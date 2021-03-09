@@ -1,11 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {connect} from 'react-redux';
+import {fetchFilmById} from '../../store/api-actions.js';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const AddReview = (props) => {
-  const {film} = props;
+  const {film, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl} = props;
+  const filmId = Number(props.match.params.id);
+
+  useEffect(() => {
+    if (!isFilmLoaded) {
+      onLoadData(filmId);
+    }
+  }, [isFilmLoaded]);
+
+  if (!isFilmLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <section className="movie-card movie-card--full">
@@ -37,9 +54,12 @@ const AddReview = (props) => {
           </nav>
 
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+            {authorizationStatus === AuthorizationStatus.AUTH ?
+              <div className="user-block__avatar">
+                <Link to={AppRoute.MY_LIST}><img src={`${avatarUrl}`} alt="User avatar" width="63" height="63" /></Link>
+              </div> :
+              <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
+            }
           </div>
         </header>
 
@@ -49,7 +69,7 @@ const AddReview = (props) => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm/>
+        <AddReviewForm id={film.id}/>
       </div>
 
     </section>
@@ -58,7 +78,28 @@ const AddReview = (props) => {
 
 AddReview.propTypes = {
   film: PropTypes.shape(PropTypesShapeOfFilm),
-  setActiveCard: PropTypes.func
+  setActiveCard: PropTypes.func,
+  isFilmLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string,
+  match: PropTypes.object,
+  params: PropTypes.object,
+  id: PropTypes.string,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  film: state.film,
+  isFilmLoaded: state.isFilmLoaded,
+  authorizationStatus: state.authorizationStatus,
+  avatarUrl: state.avatarUrl,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(filmId) {
+    dispatch(fetchFilmById(filmId));
+  },
+});
+
+export {AddReview};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

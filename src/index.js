@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {temporaryComments} from './mocks/films';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
@@ -29,9 +28,7 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        comments={temporaryComments}
-      />
+      <App />
     </Provider>,
     document.querySelector(`#root`)
 );

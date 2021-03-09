@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
-const SignIn = ({onSubmit, currentAuthorizationStatus}) => {
+const SignIn = ({onSubmit, currentAuthorizationStatus, isServerError}) => {
 
   if (currentAuthorizationStatus === AuthorizationStatus.AUTH) {
     return <Redirect to={AppRoute.ROOT} />;
@@ -39,13 +39,19 @@ const SignIn = ({onSubmit, currentAuthorizationStatus}) => {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+          {isServerError ?
+            <div className="sign-in__message">
+              <p>We can’t recognize this email <br/> and password combination. Please try again.</p>
+            </div> :
+            ``
+          }
           <div className="sign-in__fields">
             <div className="sign-in__field">
-              <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" ref={loginRef}/>
+              <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" ref={loginRef} required/>
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
             <div className="sign-in__field">
-              <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" ref={passwordRef}/>
+              <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" ref={passwordRef} required/>
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
           </div>
@@ -75,10 +81,12 @@ const SignIn = ({onSubmit, currentAuthorizationStatus}) => {
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   currentAuthorizationStatus: PropTypes.string.isRequired,
+  isServerError: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   currentAuthorizationStatus: state.authorizationStatus,
+  isServerError: state.isServerError
 });
 
 const mapDispatchToProps = (dispatch) => ({

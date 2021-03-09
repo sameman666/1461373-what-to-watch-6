@@ -17,7 +17,7 @@ import browserHistory from "../../browser-history";
 import {AppRoute} from '../../const';
 
 const App = (props) => {
-  const {films, comments, isDataLoaded, onLoadData} = props;
+  const {films, isDataLoaded, onLoadData} = props;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -44,16 +44,14 @@ const App = (props) => {
           path="/mylist"
           render={() => <MyList films = {films}/>}
         />
-        <Route exact path="/films/:id">
-          <Film
-            films={films}
-            film = {films[0]}
-            comments = {comments}
-          />
-        </Route>
+        <Route exact
+          path="/films/:id"
+          render={(prop) => <Film {...prop} films={films}/>}
+        />
         <PrivateRoute exact
           path="/films/:id/review"
-          render={() => <AddReview film = {films[0]}/>}
+          render={(prop) => <AddReview {...prop}
+          />}
         />
         <Route exact path="/player/:id">
           <Player
