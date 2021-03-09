@@ -6,7 +6,8 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `route/redirectToRoute`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_PROMO_FILM: `data/loadPromoFilm`,
-  SET_AVATAR: `user/avatar`
+  SET_AVATAR: `user/avatar`,
+  SET_SERVER_ERROR: `server/error`
 };
 
 export const ActionCreator = {
@@ -41,5 +42,9 @@ export const ActionCreator = {
   setAvatar: (url) => ({
     type: ActionType.SET_AVATAR,
     payload: url
+  }),
+  setServerError: (bool) => ({
+    type: ActionType.SET_SERVER_ERROR,
+    payload: bool
   }),
 };

@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 import AddReviewForm from '../add-review-form/add-review-form';
 import {connect} from 'react-redux';
 import {fetchFilmById} from '../../store/api-actions.js';
-import browserHistory from "../../browser-history";
 import LoadingScreen from '../loading-screen/loading-screen';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
 const AddReview = (props) => {
   const {film, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl} = props;
-  const filmId = Number(browserHistory.location.pathname.replace(/\D+/g, ``));
+  const filmId = Number(props.match.params.id);
 
   useEffect(() => {
     if (!isFilmLoaded) {
@@ -84,6 +83,9 @@ AddReview.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string,
+  match: PropTypes.object,
+  params: PropTypes.object,
+  id: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

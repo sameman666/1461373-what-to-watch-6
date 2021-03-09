@@ -44,14 +44,13 @@ const App = (props) => {
           path="/mylist"
           render={() => <MyList films = {films}/>}
         />
-        <Route exact path="/films/:id">
-          <Film
-            films={films}
-          />
-        </Route>
+        <Route exact
+          path="/films/:id"
+          render={(prop) => <Film {...prop} films={films}/>}
+        />
         <PrivateRoute exact
           path="/films/:id/review"
-          render={() => <AddReview
+          render={(prop) => <AddReview {...prop}
           />}
         />
         <Route exact path="/player/:id">
@@ -59,7 +58,7 @@ const App = (props) => {
             film = {films[0]}
           />
         </Route>
-        <Route exact path="/404">
+        <Route>
           <NotFound />
         </Route>
       </Switch>

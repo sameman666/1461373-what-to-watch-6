@@ -30,17 +30,25 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.LOGOUT)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(() => {})
+);
+
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then((response) => dispatch(ActionCreator.setAvatar(response.data.avatar_url)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
-    .catch(() => {})
+    .then(() => dispatch(ActionCreator.setServerError(false)))
+    .catch(() => dispatch(ActionCreator.setServerError(true)))
 );
 
 export const postReview = ({rating, comment}, id) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => dispatch(ActionCreator.loadCommentsById(data)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoute.FILMS}/${id}`)))
-    .catch()
+    .then(() => dispatch(ActionCreator.setServerError(false)))
+    .catch(() => dispatch(ActionCreator.setServerError(true)))
 );

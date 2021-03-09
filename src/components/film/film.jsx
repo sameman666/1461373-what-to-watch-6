@@ -4,7 +4,6 @@ import Tabs from '../tabs/tabs';
 import {PropTypesShapeOfFilm, PropTypesShapeOfComment} from '../../prop-types-shape';
 import PropTypes from 'prop-types';
 import FilmList from '../film-list/film-list';
-import browserHistory from "../../browser-history";
 import {connect} from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchFilmById, fetchCommentsById} from '../../store/api-actions.js';
@@ -13,7 +12,7 @@ import {AuthorizationStatus, AppRoute} from '../../const';
 const Film = (props) => {
   const MORE_LIKE_THIS_AMOUNT = 4;
   const {films, film, comments, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl} = props;
-  const filmId = Number(browserHistory.location.pathname.replace(/\D+/g, ``));
+  const filmId = Number(props.match.params.id);
 
   useEffect(() => {
     if (!isFilmLoaded) {
@@ -134,6 +133,9 @@ Film.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string,
+  match: PropTypes.object,
+  params: PropTypes.object,
+  id: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

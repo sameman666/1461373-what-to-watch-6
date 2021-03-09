@@ -10,7 +10,8 @@ const initialState = {
   isDataLoaded: false,
   avatarUrl: null,
   isFilmLoaded: false,
-  comments: []
+  comments: [],
+  isServerError: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -52,6 +53,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         avatarUrl: action.payload,
+      };
+    case ActionType.SET_SERVER_ERROR:
+      return {
+        ...state,
+        isServerError: action.payload,
       };
   }
 
