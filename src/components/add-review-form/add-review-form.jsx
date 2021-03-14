@@ -10,7 +10,7 @@ import ReviewText from '../review-text/review-text';
 
 const AddReviewForm = ({id, onSubmitReview, isServerError, sendCommentStatus, isSendingComment}) => {
 
-  const RATING_STARS = [`1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`];
+
   const MIN_COMMENT_LENGTH = 50;
 
   const [userRating, setUserRating] = useState({
@@ -47,7 +47,7 @@ const AddReviewForm = ({id, onSubmitReview, isServerError, sendCommentStatus, is
   return (
     <form onSubmit={handleSubmit} action="#" className="add-review__form">
       <div className="rating">
-        <RatingStars stars={RATING_STARS} currentRating={userRating.rating} handleRatingFieldChange={handleRatingFieldChange} isSendingComment={isSendingComment}/>
+        <RatingStars currentRating={userRating.rating} handleRatingFieldChange={handleRatingFieldChange} isSendingComment={isSendingComment}/>
       </div>
       {isServerError ?
         <div><p style={{color: `red`, textAlign: `center`}}>Произошла ошибка при отправке. Попробуйте еще раз</p></div> :

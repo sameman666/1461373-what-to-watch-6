@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RatingStars = ({stars, currentRating, handleRatingFieldChange, isSendingComment}) => {
+const RatingStars = ({currentRating, handleRatingFieldChange, isSendingComment}) => {
+
+  const amountOfStars = 10;
+  const RATING_STARS = new Array(amountOfStars).fill(null);
+
   return (
     <div className="rating__stars">
-      {stars.map((star, index) =>
+      {RATING_STARS.map((_star, index) =>
         <React.Fragment key={`${index + 1}`}>
-          <input disabled={isSendingComment} onChange={handleRatingFieldChange} checked={star === currentRating} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={`${index + 1}`}/>
+          <input disabled={isSendingComment} onChange={handleRatingFieldChange} checked={(index + 1).toString() === currentRating} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={`${index + 1}`}/>
           <label className="rating__label" htmlFor={`star-${index + 1}`}>{`Rating ${index + 1}`}</label>
         </React.Fragment>
       )}
