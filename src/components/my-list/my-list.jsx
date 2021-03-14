@@ -3,6 +3,7 @@ import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getAvatar} from '../../store/user-data/selectors';
 
 const MyList = (props) => {
   const {films, avatarUrl} = props;
@@ -62,7 +63,7 @@ const MyList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  avatarUrl: state.avatarUrl
+  avatarUrl: getAvatar(state)
 });
 
 MyList.propTypes = {

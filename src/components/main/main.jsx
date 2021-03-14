@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
-import {Filters} from '../../const';
 import FilmList from '../film-list/film-list';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
@@ -9,19 +8,12 @@ import {START_COUNT_FILMS_IN_LIST} from '../../const';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus, AppRoute} from '../../const';
+import {getGenre, getPromoFilm, getFilterMoviesByGenre} from '../../store/film-data/selectors';
+import {getAuthorizationStatus, getAvatar} from '../../store/user-data/selectors';
 
 const Main = (props) => {
-  const {films, promoFilm, genre, authorizationStatus, avatarUrl} = props;
+  const {films, promoFilm, authorizationStatus, avatarUrl} = props;
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
-
-  const filterMoviesByGenre = (filter, movies) => {
-    if (filter === Filters.DEFAULT) {
-      return movies;
-    }
-    return movies.filter((movie)=>movie.genre === filter);
-  };
-
-  const filteredFilms = filterMoviesByGenre(genre, films);
 
   return (
     <React.Fragment>
@@ -87,9 +79,9 @@ const Main = (props) => {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenresList setStartCountFilmsInList={setCountFilmsInFilter}/>
-          <FilmList films={filteredFilms} countFilmsInList={countFilmsInFilter}/>
+          <FilmList films={films} countFilmsInList={countFilmsInFilter}/>
 
-          {filteredFilms.length > countFilmsInFilter &&
+          {films.length > countFilmsInFilter &&
           <ShowMoreButton countFilmsInList={countFilmsInFilter} setCountFilmsInList={setCountFilmsInFilter}/>
           }
         </section>
@@ -113,11 +105,11 @@ const Main = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  genre: state.genre,
-  films: state.films,
-  authorizationStatus: state.authorizationStatus,
-  promoFilm: state.promoFilm,
-  avatarUrl: state.avatarUrl
+  genre: getGenre(state),
+  films: getFilterMoviesByGenre(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  promoFilm: getPromoFilm(state),
+  avatarUrl: getAvatar(state)
 });
 
 Main.propTypes = {

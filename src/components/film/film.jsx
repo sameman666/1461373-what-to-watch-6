@@ -8,6 +8,9 @@ import {connect} from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchFilmById, fetchCommentsById} from '../../store/api-actions.js';
 import {AuthorizationStatus, AppRoute} from '../../const';
+import {getFilm, getFilmLoadedStatus} from '../../store/film-data/selectors';
+import {getAuthorizationStatus, getAvatar} from '../../store/user-data/selectors';
+import {getComments} from '../../store/comments-data/selectors';
 
 const Film = (props) => {
   const MORE_LIKE_THIS_AMOUNT = 4;
@@ -139,11 +142,11 @@ Film.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  film: state.film,
-  isFilmLoaded: state.isFilmLoaded,
-  authorizationStatus: state.authorizationStatus,
-  avatarUrl: state.avatarUrl,
-  comments: state.comments
+  film: getFilm(state),
+  isFilmLoaded: getFilmLoadedStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  avatarUrl: getAvatar(state),
+  comments: getComments(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

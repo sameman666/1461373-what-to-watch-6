@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import {fetchFilmById} from '../../store/api-actions.js';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {AuthorizationStatus, AppRoute} from '../../const';
+import {getAuthorizationStatus, getAvatar} from '../../store/user-data/selectors';
+import {getFilm, getFilmLoadedStatus} from '../../store/film-data/selectors';
 
 const AddReview = (props) => {
   const {film, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl} = props;
@@ -89,10 +91,10 @@ AddReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  film: state.film,
-  isFilmLoaded: state.isFilmLoaded,
-  authorizationStatus: state.authorizationStatus,
-  avatarUrl: state.avatarUrl,
+  film: getFilm(state),
+  isFilmLoaded: getFilmLoadedStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  avatarUrl: getAvatar(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
