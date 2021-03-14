@@ -1,49 +1,62 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {postReview} from '../../store/api-actions.js';
+import {setSendingCommentStatus} from '../../store/action.js';
+import {getServerErrorStatus} from '../../store/server-error/selectors';
+import {getCommentSendingStatus} from '../../store/comments-data/selectors';
+import RatingStars from '../rating-stars/rating-stars';
+import ReviewText from '../review-text/review-text';
 
-const AddReviewForm = ({id, onSubmitReview, isServerError}) => {
+const AddReviewForm = ({id, onSubmitReview, isServerError, sendCommentStatus, isSendingComment}) => {
 
   const RATING_STARS = [`1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`];
-  const [userReview, setUserReview] = useState({
+  const MIN_COMMENT_LENGTH = 50;
+
+  const [userRating, setUserRating] = useState({
     "rating": `3`,
+  });
+
+  const [userReview, setUserReview] = useState({
     "review": ``,
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    sendCommentStatus();
     onSubmitReview({
-      rating: userReview.rating,
+      rating: userRating.rating,
       comment: userReview.review
     }, id);
   };
 
-  const handleFieldChange = (evt) => {
-    const {name, value} = evt.target;
-    setUserReview({...userReview, [name]: value});
-  };
+  const handleRatingFieldChange = useCallback(
+      (evt) => {
+        const {name, value} = evt.target;
+        setUserRating({...userRating, [name]: value});
+      }, [userRating]
+  );
+
+  const handleTextFieldChange = useCallback(
+      (evt) => {
+        const {name, value} = evt.target;
+        setUserReview({...userReview, [name]: value});
+      }, [userReview]
+  );
 
   return (
     <form onSubmit={handleSubmit} action="#" className="add-review__form">
       <div className="rating">
-        <div className="rating__stars">
-          {RATING_STARS.map((star, index) =>
-            <React.Fragment key={`${index + 1}`}>
-              <input onChange={handleFieldChange} checked={star === userReview.rating} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={`${index + 1}`}/>
-              <label className="rating__label" htmlFor={`star-${index + 1}`}>{`Rating ${index + 1}`}</label>
-            </React.Fragment>
-          )}
-        </div>
+        <RatingStars stars={RATING_STARS} currentRating={userRating.rating} handleRatingFieldChange={handleRatingFieldChange} isSendingComment={isSendingComment}/>
       </div>
       {isServerError ?
         <div><p style={{color: `red`, textAlign: `center`}}>Произошла ошибка при отправке. Попробуйте еще раз</p></div> :
         ``
       }
       <div className="add-review__text">
-        <textarea onChange={handleFieldChange} value={userReview.review} minLength="50" maxLength="400" className="add-review__textarea" name="review" id="review" placeholder="Review text" />
+        <ReviewText currentReview={userReview.review} handleTextFieldChange={handleTextFieldChange} isSendingComment={isSendingComment}/>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={(userRating.rating === null) || (userReview.review.length < MIN_COMMENT_LENGTH) || isSendingComment}>{isSendingComment ? `...Posting` : `Post`}</button>
         </div>
 
       </div>
@@ -55,13 +68,19 @@ AddReviewForm.propTypes = {
   id: PropTypes.number,
   onSubmitReview: PropTypes.func,
   isServerError: PropTypes.bool,
+  isSendingComment: PropTypes.bool,
+  sendCommentStatus: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  isServerError: state.isServerError
+  isServerError: getServerErrorStatus(state),
+  isSendingComment: getCommentSendingStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  sendCommentStatus() {
+    dispatch(setSendingCommentStatus(true));
+  },
   onSubmitReview(review, id) {
     dispatch(postReview(review, id));
   }

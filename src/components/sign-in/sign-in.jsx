@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AuthorizationStatus, AppRoute} from '../../const';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
+import {getServerErrorStatus} from '../../store/server-error/selectors';
 
 const SignIn = ({onSubmit, currentAuthorizationStatus, isServerError}) => {
 
@@ -85,8 +87,8 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentAuthorizationStatus: state.authorizationStatus,
-  isServerError: state.isServerError
+  currentAuthorizationStatus: getAuthorizationStatus(state),
+  isServerError: getServerErrorStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

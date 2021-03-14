@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {changeGenre} from '../../store/action';
 import {Filters, START_COUNT_FILMS_IN_LIST} from '../../const';
+import {getGenre, getFilms} from '../../store/film-data/selectors';
 
 const GenresList = (props) => {
-  const {films, genre, changeGenre, setStartCountFilmsInList} = props;
+  const {films, genre, changeCurrentGenre, setStartCountFilmsInList} = props;
 
   const uniqueGenres = Array.from(new Set(films.map((film)=>film.genre)));
   uniqueGenres.unshift(Filters.DEFAULT);
@@ -21,7 +22,7 @@ const GenresList = (props) => {
         <li key={index} className={`catalog__genres-item ${uniqueGenre === genre ? `catalog__genres-item--active` : ``}`}>
           <a className="catalog__genres-link" style={{cursor: `pointer`}}
             onClick={() => {
-              changeGenre(uniqueGenre);
+              changeCurrentGenre(uniqueGenre);
               handleResetCountFilms();
             }}>
             {uniqueGenre}
@@ -35,20 +36,20 @@ const GenresList = (props) => {
 
 GenresList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
-  changeGenre: PropTypes.func.isRequired,
+  changeCurrentGenre: PropTypes.func.isRequired,
   genre: PropTypes.string,
   setStartCountFilmsInList: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  genre: state.genre,
-  films: state.films,
+  genre: getGenre(state),
+  films: getFilms(state),
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
-  changeGenre(genre) {
-    dispatch(ActionCreator.changeGenre(genre));
+  changeCurrentGenre(genre) {
+    dispatch(changeGenre(genre));
   },
 });
 
