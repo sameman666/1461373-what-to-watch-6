@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const RatingStars = ({currentRating, handleRatingFieldChange, isSendingComment}) => {
 
-  const amountOfStars = 10;
-  const RATING_STARS = new Array(amountOfStars).fill(null);
+  const AMOUNT_OF_STARS = 10;
+  const RATING_STARS = new Array(AMOUNT_OF_STARS).fill(null);
 
   return (
     <div className="rating__stars">
