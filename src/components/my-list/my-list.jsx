@@ -1,12 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {getAvatar} from '../../store/user-data/selectors';
+import {getFavoritesLoadedStatus, getFavoriteFilms} from '../../store/film-data/selectors';
+import {fetchFavorites, fetchFilmById} from '../../store/api-actions.js';
+import LoadingScreen from '../loading-screen/loading-screen';
+import VideoPlayer from '../video-player/video-player';
+import {AppRoute} from '../../const';
 
 const MyList = (props) => {
-  const {films, avatarUrl} = props;
+  const {favoriteFilms, avatarUrl, onLoadFavorites, isFavoriteFilmsLoaded, onLoadFilm} = props;
+
+  useEffect(() => {
+    if (!isFavoriteFilmsLoaded) {
+      onLoadFavorites();
+    }
+  }, [isFavoriteFilmsLoaded]);
+
+  if (!isFavoriteFilmsLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="user-page">
@@ -32,13 +49,13 @@ const MyList = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
-          {films.map((film) =>
-            <article key={`${film.id}`} className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src={film.preview_image} alt={film.name} width="280" height="175" />
-              </div>
+          {favoriteFilms.map((film) =>
+            <article className="small-movie-card catalog__movies-card" key={film.id}>
+              <Link to={`${AppRoute.FILMS}/${film.id}`} onClick={()=>onLoadFilm(film.id)}>
+                <VideoPlayer defaultIsPlaying={false} film={film}/>
+              </Link>
               <h3 className="small-movie-card__title">
-                <Link to={`/films/${film.id}`} className="small-movie-card__link">{film.name}</Link>
+                <Link to={`${AppRoute.FILMS}/${film.id}`} className="small-movie-card__link" onClick={()=>onLoadFilm(film.id)}>{film.name}</Link>
               </h3>
             </article>
           )}
@@ -63,13 +80,27 @@ const MyList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  avatarUrl: getAvatar(state)
+  avatarUrl: getAvatar(state),
+  isFavoriteFilmsLoaded: getFavoritesLoadedStatus(state),
+  favoriteFilms: getFavoriteFilms(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadFavorites() {
+    dispatch(fetchFavorites());
+  },
+  onLoadFilm(id) {
+    dispatch(fetchFilmById(id));
+  }
 });
 
 MyList.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
+  favoriteFilms: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   avatarUrl: PropTypes.string,
+  isFavoriteFilmsLoaded: PropTypes.bool.isRequired,
+  onLoadFavorites: PropTypes.func.isRequired,
+  onLoadFilm: PropTypes.func.isRequired
 };
 
 export {MyList};
-export default connect(mapStateToProps, null)(MyList);
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

@@ -30,6 +30,9 @@ const VideoPlayer = (props) => {
       onMouseLeave={() => {
         setIsPlaying(false);
         clearTimeout(timeoutID);
+      }}
+      onClick={() => {
+        clearTimeout(timeoutID);
       }}>
       <video ref={videoRef} src={isPlaying ? film.preview_video_link : ``} poster={film.preview_image} width="100%" muted>
       </video>

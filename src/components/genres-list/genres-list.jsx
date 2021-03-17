@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {PropTypesShapeOfFilm} from '../../prop-types-shape';
 import {connect} from 'react-redux';
 import {changeGenre} from '../../store/action';
-import {Filters, START_COUNT_FILMS_IN_LIST} from '../../const';
-import {getGenre, getFilms} from '../../store/film-data/selectors';
+import {START_COUNT_FILMS_IN_LIST} from '../../const';
+import {getGenre, getUniqueGenres} from '../../store/film-data/selectors';
 
 const GenresList = (props) => {
-  const {films, genre, changeCurrentGenre, setStartCountFilmsInList} = props;
-
-  const uniqueGenres = Array.from(new Set(films.map((film)=>film.genre)));
-  uniqueGenres.unshift(Filters.DEFAULT);
+  const {genre, changeCurrentGenre, setStartCountFilmsInList, uniqueGenres} = props;
 
   const handleResetCountFilms = () => {
     setStartCountFilmsInList(START_COUNT_FILMS_IN_LIST);
@@ -35,15 +31,15 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
-  films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   changeCurrentGenre: PropTypes.func.isRequired,
   genre: PropTypes.string,
-  setStartCountFilmsInList: PropTypes.func.isRequired
+  setStartCountFilmsInList: PropTypes.func.isRequired,
+  uniqueGenres: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   genre: getGenre(state),
-  films: getFilms(state),
+  uniqueGenres: getUniqueGenres(state)
 });
 
 

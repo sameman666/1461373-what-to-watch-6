@@ -15,7 +15,8 @@ export const AppRoute = {
   MY_LIST: `/mylist`,
   FILMS: `/films`,
   NOT_FOUND: `/404`,
-  ADD_REVIEW: `/review`
+  ADD_REVIEW: `/review`,
+  PLAYER: `/player`
 };
 
 export const APIRoute = {
@@ -23,5 +24,11 @@ export const APIRoute = {
   LOGIN: `/login`,
   LOGOUT: `/logout`,
   COMMENTS: `/comments`,
-  PROMO_FILM: `/films/promo`
+  PROMO_FILM: `/films/promo`,
+  FAVORITE: `/favorite`,
+};
+
+export const FavoriteStatuses = {
+  ADD_TO_FAVORITE_STATUS: 1,
+  REMOVE_FROM_FAVORITES: 0
 };
