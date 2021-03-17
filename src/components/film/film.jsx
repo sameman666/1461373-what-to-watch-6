@@ -6,15 +6,15 @@ import PropTypes from 'prop-types';
 import FilmList from '../film-list/film-list';
 import {connect} from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {fetchFilmById, fetchCommentsById} from '../../store/api-actions.js';
-import {AuthorizationStatus, AppRoute} from '../../const';
+import {fetchFilmById, fetchCommentsById, addToFavorites} from '../../store/api-actions.js';
+import {AuthorizationStatus, AppRoute, FavoriteStatuses} from '../../const';
 import {getFilm, getFilmLoadedStatus} from '../../store/film-data/selectors';
 import {getAuthorizationStatus, getAvatar} from '../../store/user-data/selectors';
 import {getComments} from '../../store/comments-data/selectors';
 
 const Film = (props) => {
   const MORE_LIKE_THIS_AMOUNT = 4;
-  const {films, film, comments, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl} = props;
+  const {films, film, comments, isFilmLoaded, onLoadData, authorizationStatus, avatarUrl, addToMyList} = props;
   const filmId = Number(props.match.params.id);
 
   useEffect(() => {
@@ -72,13 +72,13 @@ const Film = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <Link to={`${AppRoute.PLAYER}/${filmId}`} className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                </Link>
+                <button className="btn btn--list movie-card__button" onClick={()=>addToMyList(film.id, FavoriteStatuses.ADD_TO_FAVORITE_STATUS)} type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -139,6 +139,7 @@ Film.propTypes = {
   match: PropTypes.object,
   params: PropTypes.object,
   id: PropTypes.string,
+  addToMyList: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -154,6 +155,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFilmById(filmId));
     dispatch(fetchCommentsById(filmId));
   },
+  addToMyList(filmId, status) {
+    dispatch(addToFavorites(filmId, status));
+  }
 });
 
 export {Film};

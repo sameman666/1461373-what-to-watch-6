@@ -7,12 +7,13 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 import {START_COUNT_FILMS_IN_LIST} from '../../const';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {AuthorizationStatus, AppRoute} from '../../const';
+import {AuthorizationStatus, AppRoute, FavoriteStatuses} from '../../const';
 import {getGenre, getPromoFilm, getFilterMoviesByGenre} from '../../store/film-data/selectors';
 import {getAuthorizationStatus, getAvatar} from '../../store/user-data/selectors';
+import {fetchFilmById, fetchCommentsById, addToFavorites} from '../../store/api-actions.js';
 
 const Main = (props) => {
-  const {films, promoFilm, authorizationStatus, avatarUrl} = props;
+  const {films, promoFilm, authorizationStatus, avatarUrl, onLoadData, addToMyList} = props;
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
 
   return (
@@ -57,13 +58,13 @@ const Main = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <Link to={`${AppRoute.PLAYER}/${promoFilm.id}`} onClick={()=>onLoadData(promoFilm.id)} className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                </Link>
+                <button className="btn btn--list movie-card__button" onClick={()=>addToMyList(promoFilm.id, FavoriteStatuses.ADD_TO_FAVORITE_STATUS)} type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -112,13 +113,25 @@ const mapStateToProps = (state) => ({
   avatarUrl: getAvatar(state)
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(filmId) {
+    dispatch(fetchFilmById(filmId));
+    dispatch(fetchCommentsById(filmId));
+  },
+  addToMyList(filmId, status) {
+    dispatch(addToFavorites(filmId, status));
+  }
+});
+
 Main.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(PropTypesShapeOfFilm)),
   promoFilm: PropTypes.shape(PropTypesShapeOfFilm),
   genre: PropTypes.string,
   authorizationStatus: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string,
+  onLoadData: PropTypes.func.isRequired,
+  addToMyList: PropTypes.func.isRequired
 };
 
 export {Main};
-export default connect(mapStateToProps, null)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

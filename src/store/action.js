@@ -8,7 +8,9 @@ export const ActionType = {
   LOAD_PROMO_FILM: `data/loadPromoFilm`,
   SET_AVATAR: `user/avatar`,
   SET_SERVER_ERROR: `server/error`,
-  SET_SENDING_COMMENT_STATUS: `data/setSendingCommentStatus`
+  SET_SENDING_COMMENT_STATUS: `data/setSendingCommentStatus`,
+  SET_LOAD_FAVORITE_STATUS: `data/loadFavoriteStatus`,
+  LOAD_FAVORITE: `data/loadFavorite`
 };
 
 export const changeGenre = (genre) => ({
@@ -19,6 +21,16 @@ export const changeGenre = (genre) => ({
 export const loadFilms = (films) => ({
   type: ActionType.LOAD_FILMS,
   payload: films
+});
+
+export const loadFavorite = (films) => ({
+  type: ActionType.LOAD_FAVORITE,
+  payload: films
+});
+
+export const setLoadFavoriteStatus = (status) => ({
+  type: ActionType.SET_LOAD_FAVORITE_STATUS,
+  payload: status
 });
 
 export const loadFilmById = (film) => ({

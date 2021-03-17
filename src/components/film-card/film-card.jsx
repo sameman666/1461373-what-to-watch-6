@@ -12,7 +12,9 @@ const FilmCard = (props) => {
 
   return (
     <article className="small-movie-card catalog__movies-card">
-      <Link to={`${AppRoute.FILMS}/${film.id}`} onClick={()=>onLoadData(film.id)}><VideoPlayer defaultIsPlaying={false} film={film}/></Link>
+      <Link to={`${AppRoute.FILMS}/${film.id}`} onClick={()=>onLoadData(film.id)}>
+        <VideoPlayer defaultIsPlaying={false} film={film}/>
+      </Link>
       <h3 className="small-movie-card__title">
         <Link to={`${AppRoute.FILMS}/${film.id}`} className="small-movie-card__link" onClick={()=>onLoadData(film.id)}>{film.name}</Link>
       </h3>

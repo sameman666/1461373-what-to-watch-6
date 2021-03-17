@@ -43,7 +43,7 @@ const App = (props) => {
         </Route>
         <PrivateRoute exact
           path="/mylist"
-          render={() => <MyList films = {films}/>}
+          render={() => <MyList/>}
         />
         <Route exact
           path="/films/:id"
@@ -54,11 +54,10 @@ const App = (props) => {
           render={(prop) => <AddReview {...prop}
           />}
         />
-        <Route exact path="/player/:id">
-          <Player
-            film = {films[0]}
-          />
-        </Route>
+        <Route exact
+          path="/player/:id"
+          render={(prop) => <Player {...prop} />}
+        />
         <Route>
           <NotFound />
         </Route>
