@@ -34,7 +34,7 @@ GenresList.propTypes = {
   changeCurrentGenre: PropTypes.func.isRequired,
   genre: PropTypes.string,
   setStartCountFilmsInList: PropTypes.func.isRequired,
-  uniqueGenres: PropTypes.array
+  uniqueGenres: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const mapStateToProps = (state) => ({

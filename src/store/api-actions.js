@@ -4,7 +4,7 @@ import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 export const fetchFilmList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
     .then(({data}) => dispatch(loadFilms(data)))
-    .catch(() => {})
+    .catch(() => dispatch(setServerError(true)))
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
