@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should ReviewText block render correctly 1`] = `
+<div>
+  <textarea
+    class="add-review__textarea"
+    id="review"
+    maxlength="400"
+    name="review"
+    placeholder="Review text"
+  />
+</div>
+`;

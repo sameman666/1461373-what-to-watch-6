@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should LoadingScreen render correctly 1`] = `
+<div>
+  <div
+    class="page-content"
+    style="min-height: 100vh; text-align: center;"
+  >
+    <h1>
+      Loading ...
+    </h1>
+  </div>
+</div>
+`;
