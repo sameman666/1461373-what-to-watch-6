@@ -27,7 +27,7 @@ const Tabs = (props) => {
   };
 
   const ratingToText = (rating) => {
-    switch (rating) {
+    switch (true) {
       case (rating > Ratings.BAD && rating <= Ratings.NORMAL) :
         return `Bad`;
       case (rating > Ratings.NORMAL && rating <= Ratings.GOOD) :
@@ -53,7 +53,7 @@ const Tabs = (props) => {
         return (
           <React.Fragment>
             <div className="movie-rating">
-              <div className="movie-rating__score">{film.rating}</div>
+              <div className="movie-rating__score">{film.rating.toFixed(1)}</div>
               <p className="movie-rating__meta">
                 <span className="movie-rating__level">{ratingToText(film.rating)}</span>
                 <span className="movie-rating__count">{film.scores_count} ratings</span>

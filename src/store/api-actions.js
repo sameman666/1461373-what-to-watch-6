@@ -1,4 +1,4 @@
-import {loadFilms, loadPromoFilm, loadFilmById, redirectToRoute, loadCommentsById, setAvatar, requireAuthorization, setServerError, setSendingCommentStatus, loadFavorite, setLoadFavoriteStatus} from "./action";
+import {loadFilms, loadPromoFilm, loadFilmById, redirectToRoute, loadCommentsById, setAvatar, requireAuthorization, setServerError, setSendingCommentStatus, loadFavorite, setLoadFavoriteStatus, setMailError} from "./action";
 import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 
 export const fetchFilmList = () => (dispatch, _getState, api) => (
@@ -48,8 +48,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then((response) => dispatch(setAvatar(response.data.avatar_url)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
-    .then(() => dispatch(setServerError(false)))
-    .catch(() => dispatch(setServerError(true)))
+    .then(() => dispatch(setMailError(``)))
+    .catch((error) => dispatch(setMailError(error.toString())))
 );
 
 export const addToFavorites = (id, status) => (dispatch, _getState, api) => (

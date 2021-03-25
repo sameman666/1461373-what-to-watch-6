@@ -10,7 +10,8 @@ export const ActionType = {
   SET_SERVER_ERROR: `server/error`,
   SET_SENDING_COMMENT_STATUS: `data/setSendingCommentStatus`,
   SET_LOAD_FAVORITE_STATUS: `data/loadFavoriteStatus`,
-  LOAD_FAVORITE: `data/loadFavorite`
+  LOAD_FAVORITE: `data/loadFavorite`,
+  SET_MAIL_ERROR: `server/mailError`
 };
 
 export const changeGenre = (genre) => ({
@@ -70,5 +71,10 @@ export const setServerError = (bool) => ({
 
 export const setSendingCommentStatus = (bool) => ({
   type: ActionType.SET_SENDING_COMMENT_STATUS,
+  payload: bool
+});
+
+export const setMailError = (bool) => ({
+  type: ActionType.SET_MAIL_ERROR,
   payload: bool
 });

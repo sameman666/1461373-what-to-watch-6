@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AuthorizationStatus, AppRoute} from '../../const';
 import {getAuthorizationStatus} from '../../store/user-data/selectors';
-import {getServerErrorStatus} from '../../store/server-error/selectors';
+import {getMailErrorStatus} from '../../store/server-error/selectors';
 
-const SignIn = ({onSubmit, currentAuthorizationStatus, isServerError}) => {
+const SignIn = ({onSubmit, currentAuthorizationStatus, isMailError}) => {
 
   if (currentAuthorizationStatus === AuthorizationStatus.AUTH) {
     return <Redirect to={AppRoute.ROOT} />;
@@ -41,9 +41,9 @@ const SignIn = ({onSubmit, currentAuthorizationStatus, isServerError}) => {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
-          {isServerError ?
+          {isMailError ?
             <div className="sign-in__message">
-              <p>We can’t recognize this email <br/> and password combination. Please try again.</p>
+              <p>{isMailError.toString()}</p>
             </div> :
             ``
           }
@@ -83,12 +83,12 @@ const SignIn = ({onSubmit, currentAuthorizationStatus, isServerError}) => {
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   currentAuthorizationStatus: PropTypes.string.isRequired,
-  isServerError: PropTypes.bool
+  isMailError: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   currentAuthorizationStatus: getAuthorizationStatus(state),
-  isServerError: getServerErrorStatus(state)
+  isMailError: getMailErrorStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import nanoid from 'nanoid';
 
 const RatingStars = ({currentRating, handleRatingFieldChange, isSendingComment}) => {
 
@@ -9,7 +10,7 @@ const RatingStars = ({currentRating, handleRatingFieldChange, isSendingComment})
   return (
     <div className="rating__stars">
       {RATING_STARS.map((_star, index) =>
-        <React.Fragment key={`${index + 1}`}>
+        <React.Fragment key={nanoid()}>
           <input disabled={isSendingComment} onChange={handleRatingFieldChange} checked={(index + 1).toString() === currentRating} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={`${index + 1}`}/>
           <label className="rating__label" htmlFor={`star-${index + 1}`}>{`Rating ${index + 1}`}</label>
         </React.Fragment>

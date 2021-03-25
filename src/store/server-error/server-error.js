@@ -1,7 +1,8 @@
 import {ActionType} from '../action';
 
 const initialState = {
-  isServerError: false
+  isServerError: false,
+  isMailError: ``
 };
 
 const serverError = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const serverError = (state = initialState, action) => {
       return {
         ...state,
         isServerError: action.payload,
+      };
+    case ActionType.SET_MAIL_ERROR:
+      return {
+        ...state,
+        isMailError: action.payload,
       };
   }
 

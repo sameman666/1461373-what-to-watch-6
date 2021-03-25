@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {changeGenre} from '../../store/action';
-import {START_COUNT_FILMS_IN_LIST} from '../../const';
+import {START_COUNT_FILMS_IN_LIST, MAX_COUNT_GENRES_IN_LIST} from '../../const';
 import {getGenre, getUniqueGenres} from '../../store/film-data/selectors';
 
 const GenresList = (props) => {
@@ -14,8 +14,8 @@ const GenresList = (props) => {
 
   return (
     <ul className="catalog__genres-list">
-      {uniqueGenres.map((uniqueGenre, index) =>
-        <li key={index} className={`catalog__genres-item ${uniqueGenre === genre ? `catalog__genres-item--active` : ``}`}>
+      {uniqueGenres.slice(0, MAX_COUNT_GENRES_IN_LIST).map((uniqueGenre) =>
+        <li key={uniqueGenre} className={`catalog__genres-item ${uniqueGenre === genre ? `catalog__genres-item--active` : ``}`}>
           <a className="catalog__genres-link" style={{cursor: `pointer`}}
             onClick={() => {
               changeCurrentGenre(uniqueGenre);

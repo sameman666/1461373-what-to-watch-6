@@ -24,4 +24,21 @@ describe(`Reducers work correctly`, () => {
     expect(serverError(state, action))
       .toEqual({isServerError: true});
   });
+
+  it(`Reducer should return state with actual mail error status`, () => {
+
+    const MailError = `error`;
+
+    const action = {
+      type: ActionType.SET_MAIL_ERROR,
+      payload: MailError
+    };
+
+    const state = {
+      isMailError: ``
+    };
+
+    expect(serverError(state, action))
+      .toEqual({isMailError: `error`});
+  });
 });
