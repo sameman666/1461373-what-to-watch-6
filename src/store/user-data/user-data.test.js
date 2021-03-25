@@ -103,8 +103,8 @@ describe(`Async operation work correctly`, () => {
           payload: AppRoute.ROOT,
         });
         expect(dispatch).toHaveBeenNthCalledWith(4, {
-          type: ActionType.SET_SERVER_ERROR,
-          payload: false,
+          type: ActionType.SET_MAIL_ERROR,
+          payload: ``,
         });
       });
   });

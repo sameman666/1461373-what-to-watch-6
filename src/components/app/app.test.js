@@ -23,6 +23,7 @@ describe(`Test routing`, () => {
       film: {
         "starring": [],
         "id": 0,
+        "rating": 1
       },
       isDataLoaded: true,
       isFilmLoaded: true,
